@@ -8,6 +8,8 @@ import logoImg from '../assets/images/logo.svg';
 import { database } from '../services/firebase';
 
 import '../styles/auth.scss';
+
+
 import { Button } from '../components/Button';
 import { useAuth } from '../hooks/useAuth';
 
