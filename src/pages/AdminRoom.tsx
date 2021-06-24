@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
 import '../styles/room.scss';
 import { Button } from '../components/Button';
@@ -28,9 +28,19 @@ export function AdminRoom() {
     //const {user} = useAuth();
     const params = useParams<RoomParams>();
 
+    const history = useHistory();
+
     const roomId = params.id;
 
     const {title, questions} = useRoom(roomId);
+
+    async function handleEndRoom() {
+        await database.ref(`rooms/${roomId}`).update({
+            endeAt: new Date(),
+        })
+
+        history.push('/');
+    }
     
     async function handleDeleteQuestion(questionId: string) {
 
@@ -47,7 +57,7 @@ export function AdminRoom() {
                     <img src={logoImg} alt="Logo" />
                     <div>
                          <RoomCode code={roomId} />
-                        <Button isOutlined>Encerrar sala</Button>
+                        <Button isOutlined onClick={() => handleEndRoom()}>Encerrar sala</Button>
                     </div>
                 </div>
             </header>
